@@ -75,3 +75,94 @@
 // =============================================================================
 
 
+const readlineSync = require('readline-sync');
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+}
+
+function modulus(a, b) {
+  return a % b;
+}
+
+function exponent(a, b) {
+  return a ** b;
+}
+
+function showMenu() {
+  console.log("\n============================");
+  console.log("     SIMPLE CALCULATOR");
+  console.log("============================");
+  console.log("1. Addition");
+  console.log("2. Subtraction");
+  console.log("3. Multiplication");
+  console.log("4. Division");
+  console.log("5. Modulus");
+  console.log("6. Exponentiation");
+  console.log("7. Quit");
+}
+
+let running = true;
+while (running) {
+  showMenu();
+  let choice = readlineSync.question("Select an operation (1-7): ");
+
+  if (choice === "7") {
+    console.log("Goodbye!");
+    running = false;
+    continue;
+  }
+
+  if (!["1", "2", "3", "4", "5", "6"].includes(choice)) {
+    console.log("Error: please select a number from 1 to 7.");
+    continue;
+  }
+
+  let a = readlineSync.questionFloat("Enter first number : ");
+  let b = readlineSync.questionFloat("Enter second number: ");
+
+  let result;
+  let symbol;
+
+  if (choice === "1") {
+    result = add(a, b);
+    symbol = "+";
+  } else if (choice === "2") {
+    result = subtract(a, b);
+    symbol = "-";
+  } else if (choice === "3") {
+    result = multiply(a, b);
+    symbol = "*";
+  } else if (choice === "4") {
+    if (b === 0) {
+      console.log("Error: Cannot divide by zero.");
+      continue;
+    }
+    result = divide(a, b);
+    symbol = "/";
+  } else if (choice === "5") {
+    if (b === 0) {
+      console.log("Error: Cannot take modulus by zero.");
+      continue;
+    }
+    result = modulus(a, b);
+    symbol = "%";
+  } else if (choice === "6") {
+    result = exponent(a, b);
+    symbol = "**";
+  }
+
+  console.log("Result: " + a + " " + symbol + " " + b + " = " + result.toFixed(2));
+}
